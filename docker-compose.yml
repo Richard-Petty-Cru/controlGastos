@@ -5,27 +5,28 @@ services:
     hostname: web-vue
     build: .
     environment:
-      process.env.VUE_APP_RUTA_API: "http://0.0.0.0:3000"
+      process.env.VUE_APP_RUTA_API: "http://0.0.0.0:4000"
       
     links:
-      - "mybasedatos:json-server"  
+      - "mydb:json-server"  
     command: npm run serve
     ports:
-      - "8086:8086"
+      - "8087:8087"
     depends_on:
-      - mybasedatos
+      - mydb
     networks:
       conexion_networks:
         aliases:
           - conexion_bd
           
-  mybasedatos:
-    hostname: mybasedatos
+         
+  mydb:
+    hostname: mydb
     build: . 
     command: Set-ExecutionPolicy -Scope CurrentUser unrestricted
-    command: json-server -H 0.0.0.0 -p 3000 --watch dataBase/cuentas.json
+    command: json-server -H 0.0.0.0 -p 4000 --watch database/db.json
     ports:
-      - "3000:3000"
+      - "4000:4000"
     networks:
      conexion_networks:
        aliases:
@@ -37,5 +38,3 @@ networks:
      driver: bridge
      ipam:
        driver: default
-        
-   
